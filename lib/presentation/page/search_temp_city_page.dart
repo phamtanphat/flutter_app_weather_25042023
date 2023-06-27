@@ -9,6 +9,11 @@ class SearchTempCityPage extends StatefulWidget {
 class _SearchTempCityPageState extends State<SearchTempCityPage> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder();
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Search Temp City"),
+      ),
+      body: Container(),
+    );
   }
 }

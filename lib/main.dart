@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_app_weather_25042023/presentation/page/search_temp_city_page.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,7 +15,10 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'Flutter Demo Home Page'),
+      routes: {
+        "/search_temp_city" : (context) => SearchTempCityPage()
+      },
+      initialRoute: "/search_temp_city",
     );
   }
 }
