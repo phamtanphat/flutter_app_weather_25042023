@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter_app_weather_25042023/common/app_constants.dart';
 
 class DioClient {
   // Singleton pattern
@@ -10,7 +11,7 @@ class DioClient {
       Dio dio = Dio(BaseOptions(
         connectTimeout: const Duration(seconds: 30),
         receiveTimeout: const Duration(seconds: 30),
-        baseUrl: "https://api.openweathermap.org/"
+        baseUrl: AppConstants.BASE_URL
       ));
 
       dio.interceptors.add(LogInterceptor());
