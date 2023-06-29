@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_app_weather_25042023/presentation/page/search_temp_city_page.dart';
+import 'package:flutter_app_weather_25042023/presentation/page/search_temp_city/search_temp_city_page.dart';
 
 void main() {
   runApp(const MyApp());
