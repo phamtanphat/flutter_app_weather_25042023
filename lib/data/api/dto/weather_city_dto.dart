@@ -3,7 +3,7 @@ class WeatherCityDTO {
   String? baseDTO;
   MainDTO? mainDTO;
   WindDTO? windDTO;
-  int? dtDTO;
+  num? dtDTO;
   SysDTO? sysDTO;
   String? nameDTO;
 
@@ -18,10 +18,13 @@ class WeatherCityDTO {
 
   WeatherCityDTO.fromJson(Map<String, dynamic> json) {
     if (json['weather'] != null) {
-      weatherDTO = List.empty();
-      json['weather'].forEach((v) {
-        weatherDTO?.add(WeatherDTO.fromJson(v));
-      });
+      try {
+        weatherDTO = (json['weather'] as List<dynamic>).map((e) {
+          return WeatherDTO.fromJson(e);
+        }).toList();
+      } catch(e) {
+        print("Error parser weatherDTO: $e");
+      }
     }
     baseDTO = json['base'];
     dtDTO = json['dt'];
@@ -33,8 +36,8 @@ class WeatherCityDTO {
 }
 
 class CoordDTO {
-  double? lon;
-  double? lat;
+  num? lon;
+  num? lat;
 
   CoordDTO({this.lon, this.lat});
 
@@ -45,7 +48,7 @@ class CoordDTO {
 }
 
 class WeatherDTO {
-  int? id;
+  num? id;
   String? main;
   String? description;
   String? icon;
@@ -61,14 +64,14 @@ class WeatherDTO {
 }
 
 class MainDTO {
-  int? temp;
-  int? feelsLike;
-  int? tempMin;
-  int? tempMax;
-  int? pressure;
-  int? humidity;
-  int? seaLevel;
-  int? grndLevel;
+  num? temp;
+  num? feelsLike;
+  num? tempMin;
+  num? tempMax;
+  num? pressure;
+  num? humidity;
+  num? seaLevel;
+  num? grndLevel;
 
   MainDTO({
     this.temp,
@@ -94,9 +97,9 @@ class MainDTO {
 }
 
 class WindDTO {
-  double? speed;
-  int? deg;
-  double? gust;
+  num? speed;
+  num? deg;
+  num? gust;
 
   WindDTO({this.speed, this.deg, this.gust});
 
@@ -108,11 +111,11 @@ class WindDTO {
 }
 
 class SysDTO {
-  int? type;
-  int? id;
+  num? type;
+  num? id;
   String? country;
-  int? sunrise;
-  int? sunset;
+  num? sunrise;
+  num? sunset;
 
   SysDTO({this.type, this.id, this.country, this.sunrise, this.sunset});
 
