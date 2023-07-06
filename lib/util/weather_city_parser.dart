@@ -1,9 +1,21 @@
+import 'dart:isolate';
+
 import 'package:flutter_app_weather_25042023/data/api/dto/weather_city_dto.dart';
 import 'package:flutter_app_weather_25042023/data/model/weather_city_value_object.dart';
 
 class WeatherCityParser {
 
-  static WeatherCityValueObject parseWeatherCityValueObject(WeatherCityDTO weatherCityDTO) {
+  static Future<dynamic> parseWeatherCityValueObject(Map<String, dynamic> json) async {
+    ReceivePort port = ReceivePort();
+    await Isolate.spawn((message) {
+      WeatherCityDTO weatherCityDTO = WeatherCityDTO.fromJson(json);
+      WeatherCityValueObject weatherCityValueObject = _convertWeatherDTOToValueObject(weatherCityDTO);
+      message.send(weatherCityValueObject);
+    }, port.sendPort);
+    return port.first;
+  }
+
+  static WeatherCityValueObject _convertWeatherDTOToValueObject(WeatherCityDTO weatherCityDTO) {
     // Weather DTO
     List<WeatherValueObject> listWeatherValueObject = List.empty(growable: true);
     weatherCityDTO.weatherDTO?.forEach((e) {

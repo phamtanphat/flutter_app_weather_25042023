@@ -34,8 +34,7 @@ class SearchTempCityBloc extends BaseBloc {
     setLoading = true;
     try {
       Response<dynamic> response = await _weatherRepository?.executeSearchTempForCity(event.cityName);
-      var weatherCityDTO = WeatherCityDTO.fromJson(response.data);
-      WeatherCityValueObject weatherCityValueObject = WeatherCityParser.parseWeatherCityValueObject(weatherCityDTO);
+      var weatherCityValueObject = await WeatherCityParser.parseWeatherCityValueObject(response.data);
       _weatherCityValueObjectController.sink.add(weatherCityValueObject);
     } on DioException catch(dioException) {
       var message = ThrowableUtil.parserThrowableFromJson(dioException.response?.data);

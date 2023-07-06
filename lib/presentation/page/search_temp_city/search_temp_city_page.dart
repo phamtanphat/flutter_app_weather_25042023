@@ -57,7 +57,9 @@ class _SearchTempCityContainerState extends State<SearchTempCityContainer> {
       appBar: AppBar(
         title: Text("Search Temp City"),
       ),
-      body: Container(),
+      body: Container(
+        child: CircularProgressIndicator(),
+      ),
     );
   }
 }
