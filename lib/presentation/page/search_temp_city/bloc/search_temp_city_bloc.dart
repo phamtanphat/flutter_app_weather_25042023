@@ -11,15 +11,17 @@ import 'package:flutter_app_weather_25042023/util/weather_city_parser.dart';
 
 class SearchTempCityBloc extends BaseBloc {
 
-  WeatherRepository weatherRepository;
+  WeatherRepository? _weatherRepository;
 
-  StreamController<WeatherCityValueObject> _weatherCityValueObjectController = StreamController();
+  final StreamController<WeatherCityValueObject> _weatherCityValueObjectController = StreamController();
   Stream<WeatherCityValueObject> get weatherCityValueObjectStream => _weatherCityValueObjectController.stream;
 
-  StreamController<String> _message = StreamController();
+  final StreamController<String> _message = StreamController();
   Stream<String> get messageStream => _message.stream;
 
-  SearchTempCityBloc({required this.weatherRepository}): super();
+  void setWeatherRepository(WeatherRepository weatherRepository) {
+    _weatherRepository = weatherRepository;
+  }
 
   @override
   void dispatch(BaseEvent event) {
@@ -31,7 +33,7 @@ class SearchTempCityBloc extends BaseBloc {
   void getTempFromCityName(SearchTempFromCityNameEvent event) async {
     setLoading = true;
     try {
-      Response<dynamic> response = await weatherRepository.executeSearchTempForCity(event.cityName);
+      Response<dynamic> response = await _weatherRepository?.executeSearchTempForCity(event.cityName);
       var weatherCityDTO = WeatherCityDTO.fromJson(response.data);
       WeatherCityValueObject weatherCityValueObject = WeatherCityParser.parseWeatherCityValueObject(weatherCityDTO);
       _weatherCityValueObjectController.sink.add(weatherCityValueObject);
